@@ -1,0 +1,596 @@
+body {
+    margin: 0;
+    font-family: Arial;
+    background: #f9f9f9;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 50px;
+    position: relative;
+}
+
+/* LOGO */
+.logo {
+    width: 150px;
+}
+   
+nav {
+    margin-left: auto;
+    display: flex;
+    gap: 40px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+nav a[href="#enroll"] {
+    padding: 10px 16px;
+    border-radius: 8px;
+    background: #007bff;
+    color: #fff;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+nav a[href="#enroll"]:hover {
+    background: #0056b3;
+    transform: translateY(-1px);
+}
+
+nav a:hover {
+    color: #007bff;
+}
+
+/* HAMBURGER MENU */
+.menu {
+    display: none;
+    width: 30px;
+    height: 30px;
+    position: relative;
+    cursor: pointer;
+    background: transparent;
+}
+
+.menu, .menu::before, .menu::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    background: #333;
+    transition: all 0.3s ease;
+}
+
+.menu {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.menu::before {
+    top: -10px;
+}
+
+.menu::after {
+    top: 10px;
+}
+
+.menu.open {
+    background: transparent;
+}
+
+.menu.open::before {
+    transform: rotate(45deg);
+    top: 0;
+}
+
+.menu.open::after {
+    transform: rotate(-45deg);
+    top: 0;
+}
+
+/* HERO */
+.hero{
+    position: relative;
+    height: 700px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.hero::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('images/banner.jpg') center/
+    cover no-repeat;
+    filter: blur(4px); /* adjust blur here */
+    transform: scale(1.05); /* prevents edge cut after blur */
+    z-index: 1;
+}
+
+.overlay{
+    position: relative;
+    z-index: 2;
+    color: #fff;
+    text-align: center;
+}
+
+/* HERO text sizing and shadow */
+.overlay h1{
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+    /* responsive heading for typing effect (slightly reduced max size) */
+    font-size: clamp(1.8rem, 5.5vw, 3rem); /* cap to avoid overly large text */
+    line-height: 1.05;
+    margin: 0 0 12px 0;
+}
+
+.overlay p{
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+    font-size: clamp(0.95rem, 2.0vw, 1.1rem);
+    margin: 0 0 10px 0;
+}
+
+/* Typed lines under the hero paragraph */
+.typed-line{
+    display: block;
+    font-size: clamp(1rem, 2.2vw, 1.4rem);
+    font-weight: 600;
+    margin-top: 8px;
+    color: #fff;
+}
+
+/* HERO buttons — larger and more prominent under the heading */
+.overlay button{
+    padding: 14px 26px;
+    font-size: 1.05rem;
+    border-radius: 10px;
+    border: none;
+    background: #007bff;
+    color: #fff;
+    font-weight: 700;
+    margin: 8px 10px;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s;
+}
+.overlay button:hover{ transform: translateY(-3px); box-shadow: 0 14px 36px rgba(0,0,0,0.18); background:#0056b3 }
+
+/* Make CTA buttons inside simple cards larger too */
+.card > button{
+    padding: 12px 20px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: none;
+    background: #007bff;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+}
+.card > button:hover{ background:#0056b3 }
+
+/* CARD CONTAINER (GRID) */
+.card-container{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.card{
+    padding: 25px;
+    border-radius: 15px;
+    /* Neumorphic dual-shadow: light top highlight + dark bottom shadow */
+    box-shadow: 
+        0 -2px 8px rgba(255, 255, 255, 0.8),
+        0 12px 30px rgba(0, 0, 0, 0.12),
+        inset 0 1px 2px rgba(255, 255, 255, 0.6);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    background: #fff;
+}
+.card:hover{
+    transform: translateY(-8px);
+    /* Enhanced neumorphic hover: stronger shadow with inset deepening */
+    box-shadow: 
+        0 -3px 12px rgba(255, 255, 255, 0.9),
+        0 30px 80px rgba(0, 0, 0, 0.20),
+        inset 0 1px 3px rgba(255, 255, 255, 0.8);
+}
+
+@media(max-width: 768px){
+    header {
+        padding: 15px 20px;
+    }
+    nav {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: #fff;
+        flex-direction: column;
+        gap: 0;
+        padding: 20px;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        transform: translateY(-100%);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 10;
+    }
+    nav.open {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+    nav a {
+        padding: 10px 0;
+        border-bottom: 1px solid #eee;
+    }
+    .menu {
+        display: block;
+    }
+    .card-container{
+        grid-template-columns: 1fr;
+    }
+    .button-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+.button-group {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.card > a {
+    padding: 12px 20px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: none;
+    background: #007bff;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.3s;
+}
+
+.card > a:hover {
+    background: #0056b3;
+}
+
+.card.single{
+    max-width: 700px;
+}
+
+.contact-info{
+    margin-bottom: 20px;
+}
+
+.contact-form{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    outline: none;    background: #f9f9f9;
+    box-shadow: 
+        inset 0 2px 4px rgba(0, 0, 0, 0.06),
+        inset 0 -1px 2px rgba(255, 255, 255, 0.5);}
+
+.contact-form input:focus,
+.contact-form textarea:focus{
+    border-color: #007bff;
+    box-shadow: 
+        inset 0 2px 4px rgba(0, 0, 0, 0.06),
+        inset 0 -1px 2px rgba(255, 255, 255, 0.5),
+        0 0 8px rgba(0, 123, 255, 0.25);
+}
+
+.contact-form button{
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #007bff;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.contact-form button:hover{
+    background: #0056b3;
+}
+
+/* LINKS */
+a{
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+a i{
+    margin-right: 6px;
+}
+
+/* PROFILE */
+.profile{
+    text-align: center;
+}
+
+.profile-img-container{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto;
+    box-shadow: 
+        0 -2px 8px rgba(255, 255, 255, 0.8),
+        0 5px 15px rgba(0,0,0,0.2),
+        inset 0 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+.profile-img-container img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* SLIDER */
+.slider {
+    position: relative;
+    /* keep some letterbox so images that would be cropped remain visible */
+    height: clamp(220px, 38vh, 480px);
+    overflow: hidden;
+    background: #0b0b0b; /* letterbox color */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+// ...existing code...
+/* ABOUT section — center content and constrain width for readability */
+#about {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center !important;
+    margin: 0 auto;
+    padding: 20px 16px;
+}
+
+#about .profile-img-container {
+    margin: 0 auto;
+    width: 200px;
+    height: 200px;
+}
+
+
+#about p,
+#about ul {
+    max-width: 800px;
+    margin: 0.6rem auto;
+    line-height: 1.6;
+    text-align: center; /* ensure lists/paragraphs center */
+}
+
+#about > h2 {
+    width: 100%;
+    margin: 0 0 12px 0;
+    text-align: center !important;
+    font-size: 1.8rem;
+}
+
+#about h3 {
+    margin: 0.3rem 0;
+}
+
+/* mobile tweak */
+@media (max-width: 768px) {
+    #about p,
+    #about ul {
+        max-width: 100%;
+        padding: 0 12px;
+    }
+}
+
+    .slide{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 0.6s ease;
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    .slide.active {
+        opacity: 1;
+        pointer-events: auto;
+        z-index: 1;
+    }
+
+    .slide img {
+        /* keep image fully visible (no cropping) — letterbox may show */
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        object-position: center;
+        display: block;
+        margin: 0 auto;
+    }
+
+    /* CONTACT */
+    .contact-list{
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-bottom: 18px;
+    }
+
+    .contact-item{
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .contact-item i{
+        width: 34px;
+        height: 34px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        color: #333;
+        flex: 0 0 34px;
+    }
+
+    .contact-item p{
+        margin: 0;
+        line-height: 1.2;
+    }
+
+    .social-icons{
+        display: flex;
+        gap: 25px;
+        font-size: 28px;
+    }
+
+    /* FORM */
+    input, textarea{
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+    }
+
+   /* FOOTER */
+   footer{
+    background: #fff;
+    padding: 30px 20px;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+   }
+
+
+   .footer-container{
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    text-align: center;
+    padding: 0 16px;
+   }
+
+   .footer-links{
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+   }
+
+   .footer-links a {
+    color: #333;
+    font-weight: bold;
+    text-decoration: none;
+   }
+
+   footer p,
+   .footer-copy {
+    color: #666;
+    font-size: 14px;
+    margin: 0;
+   }
+    
+/* MOBILE */
+   @media (max-width: 768px) {
+    .footer-links {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+/* Video thumbnail (used instead of iframe to avoid embed errors) */
+.video-thumb { text-align: center; }
+.video-thumb-img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    border: 1px solid #ddd;
+}
+
+/* Play overlay centered on thumbnail */
+.video-thumb a { position: relative; display: inline-block; }
+.video-thumb-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.55);
+    color: #fff;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    transition: transform 0.15s ease, background 0.15s ease;
+}
+.video-thumb a:hover .video-thumb-overlay{ transform: translate(-50%, -50%) scale(1.05); background: rgba(0,0,0,0.65); }
+
+/* YouTube link styled as a media button (no image) */
+.youtube-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #c4302b; /* YouTube red */
+    text-decoration: none;
+    font-weight: 700;
+}
+.youtube-link:hover { text-decoration: underline; }
+.youtube-play {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.7);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+}
+.youtube-link .fab { font-size: 20px; }
+.youtube-link-text { font-size: 16px; }
