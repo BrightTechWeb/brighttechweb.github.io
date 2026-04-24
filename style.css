@@ -110,6 +110,7 @@ nav a:hover {
     left: 0;
     width: 100%;
     height: 100%;
+    
     background: url('images/banner.jpg') center/cover no-repeat;
     filter: blur(4px);
     transform: scale(1.05);
@@ -312,6 +313,7 @@ cta-center {
 }
 
 /* CONTACT FORM */
+
 .contact-form{
     display: flex;
     flex-direction: column;
@@ -364,6 +366,7 @@ cta-center {
 .contact-item p {
     margin: 0;
 }
+
 
 /* LINKS */
 a{
@@ -444,3 +447,74 @@ footer{
     }
 }
 
+/* =========================
+   AUTH CARD (LOGIN / SIGNUP)
+========================= */
+
+.auth-section {
+    text-align: center;
+}
+
+.auth-card {
+    max-width: 400px;
+    margin: 20px auto;
+    background: #fff;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+}
+
+/* TABS */
+.auth-tabs {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    background: #eee;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s ease;
+}
+
+.tab-btn.active {
+    background: #007bff;
+    color: #fff;
+}
+
+/* CONTENT */
+.tab-content {
+    display: none;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.tab-content.active {
+    display: flex;
+}
+
+/* BUTTON */
+.auth-btn {
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #007bff;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* INPUTS */
+.auth-card input {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+/* FORGOT PASSWORD */
+.forgot-link {
+    margin-top: 10px;
+}

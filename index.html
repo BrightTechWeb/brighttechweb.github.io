@@ -227,25 +227,50 @@
 </section>
 
 <!-- CONTACT -->
-<section id="contact" class="card" style="background:#f2f2f2;">
-    <h2>Contact & Account Access</h2>
+<section id="contact" class="card auth-section">
+    <h2>Get Started</h2>
 
-    <form class="contact-form">
-        <h3>Sign In</h3>
-        <input type="email" placeholder="Email" required>
-        <input type="password" placeholder="Password" required>
-        <button type="submit">Sign In</button>
+    <div class="auth-card">
+
+        <!-- Tabs -->
+        <div class="auth-tabs">
+            <button class="tab-btn active" onclick="switchTab('signin')">Sign In</button>
+            <button class="tab-btn" onclick="switchTab('signup')">Sign Up</button>
+        </div>
+
+        <!-- SIGN IN -->
+        <div id="signin" class="tab-content active">
+            <h3>Sign In</h3>
+            <input type="email" placeholder="Email" required>
+            <input type="password" placeholder="Password" required>
+            <button class="auth-btn">Sign In</button>
+        </div>
+
+        <!-- SIGN IN -->
+<div id="signin" class="tab-content active">
+    <h3>Sign In</h3>
+
+    <input type="email" id="loginEmail" placeholder="Email" required>
+    <input type="password" id="loginPassword" placeholder="Password" required>
+
+    <button class="auth-btn" id="loginBtn">Sign In</button>
+
+    <p id="loginError" style="color:red;"></p>
+
+    <!-- ✅ RESTORED FORGOT PASSWORD -->
+    <p class="forgot-link">
         <a href="#">Forgot your password?</a>
-    </form>
+    </p>
+</div>
 
-    <form class="contact-form">
-        <h3>Sign Up</h3>
-        <input type="text" placeholder="Full Name" required>
-        <input type="email" placeholder="Email" required>
-        <input type="password" placeholder="Password" required>
-        <button type="submit">Create Account</button>
-    </form>
-</section>
+<!-- SIGN UP -->
+<div id="signup" class="tab-content">
+    <h3>Sign Up</h3>
+    <input type="text" placeholder="Full Name" required>
+    <input type="email" placeholder="Email" required>
+    <input type="password" placeholder="Password" required>
+    <button class="auth-btn">Create Account</button>
+</div>
 
 <!-- FOLLOW US (CORRECT POSITION BEFORE ENROLLMENT) -->
 <section class="card follow-us">
@@ -261,21 +286,16 @@
 </section>
 
 <!-- ENROLLMENT -->
-<section id="enroll" class="card">
-    <h2>Enrollment</h2>
-    <p>Secure your child's place in our ICT, Coding, Robotics, and Digital Skills classes.</p>
+<form class="contact-form enrollment-form" id="enrollmentForm">
 
-    <form class="contact-form enrollment-form" id="enrollmentForm">
+    <input type="text" name="child_name" placeholder="Child's full name" required>
+    <input type="text" name="parent_name" placeholder="Parent / Guardian name" required>
+    <input type="email" name="email" placeholder="Email address" required>
+    <input type="tel" name="phone" placeholder="Phone / Whatsapp" required>
+    <textarea name="message" placeholder="Message" rows="5" required></textarea>
 
-        <input type="text" placeholder="Child's full name" required>
-        <input type="text" placeholder="Parent / Guardian name" required>
-        <input type="email" placeholder="Email address" required>
-        <input type="tel" placeholder="Phone / Whatsapp" required>
-        <textarea placeholder="Message" rows="5" required></textarea>
-
-        <button type="submit">Submit Enrollment</button>
-    </form>
-</section>
+    <button type="submit">Submit Enrollment</button>
+</form>
 
         <!-- CONTACT US SIMPLE -->
 <section class="card contact-simple">
@@ -305,9 +325,6 @@
     </div>
 </section>
 
-    </form>
-</section>
-
 <!-- CTA -->
 <section class="card cta-center">
     <h2>Start Your Child's Tech Journey Today</h2>
@@ -325,6 +342,10 @@
             <a href="#contact">Contact</a>
         </div>
 
+<!-- &copy; 2026 Bright Tech Education
+ Author: Mayowa Samson Damilola
+ This project is for educational viewing only.
+ Unauthorized copying or redistribution is prohibited.-->
         <p>&copy; 2026 Bright Tech Education</p>
 
     </div>

@@ -162,4 +162,45 @@ if (enrollForm) {
             encodeURIComponent(text);
     });
 }
+
+function switchTab(tab) {
+    // Hide all contents
+    document.querySelectorAll(".tab-content").forEach(el => {
+        el.classList.remove("active");
+    });
+
+    // Remove active from all buttons
+    document.querySelectorAll(".tab-btn").forEach(btn => {
+        btn.classList.remove("active");
+    });
+
+    // Show selected tab
+    document.getElementById(tab).classList.add("active");
+
+    // Activate correct button
+    if (tab === "signin") {
+        document.querySelectorAll(".tab-btn")[0].classList.add("active");
+    } else {
+        document.querySelectorAll(".tab-btn")[1].classList.add("active");
+    }
+}
     
+const loginBtn = document.getElementById("loginBtn");
+
+loginBtn.addEventListener("click", function () {
+    const email = document.getElementById("loginEmail").value;
+    const password = document.getElementById("loginPassword").value;
+    const errorMsg = document.getElementById("loginError");
+
+    // FAKE LOGIN CHECK (you can change later)
+    const correctEmail = "admin@gmail.com";
+    const correctPassword = "1234";
+
+    if (email === correctEmail && password === correctPassword) {
+        errorMsg.style.color = "green";
+        errorMsg.textContent = "Login successful!";
+    } else {
+        errorMsg.style.color = "red";
+        errorMsg.textContent = "Incorrect email or password";
+    }
+});
