@@ -1,176 +1,165 @@
-/* Main site JavaScript for Bright Tech Education
-	 - toggleMenu(): open/close mobile nav
-	 - typing effect for #typing
-	 - simple slider for .slide elements
-	 - smooth scrolling for internal anchors
-	 - contact form submit handling
-*/
-
-document.addEventListener('DOMContentLoaded', () => {
-	// Mobile menu toggle
-	window.toggleMenu = function toggleMenu() {
-		const nav = document.getElementById('nav');
-		const menu = document.querySelector('.menu');
-		if (!nav || !menu) return;
-		nav.classList.toggle('open');
-		menu.classList.toggle('open');
-	};
+/* ==============================
+   Bright Tech Education JS
+   ============================== */
 
 
-		// Generic typing helper: types `text` into element `el` at `speed` ms per char
-		function typeText(el, text, speed, cb) {
-			if (!el) { if (cb) cb(); return; }
-			el.textContent = '';
-			let i = 0;
-			const t = setInterval(() => {
-				el.textContent += text.charAt(i);
-				i++;
-				if (i >= text.length) {
-					clearInterval(t);
-					if (cb) cb();
-				}
-			}, speed);
-		}
 
-		function eraseText(el, speed, cb) {
-			if (!el) { if (cb) cb(); return; }
-			const start = el.textContent || '';
-			let i = start.length;
-			const t = setInterval(() => {
-				i--;
-				el.textContent = start.slice(0, i);
-				if (i <= 0) {
-					clearInterval(t);
-					if (cb) cb();
-				}
-			}, speed);
-		}
+    /* ==============================
+       MOBILE MENU
+    ============================== */
 
-		// Elements for sequencing
-		const h1 = document.querySelector('h1');
-		const p = document.querySelector('.hero .overlay p');
-		const typed1 = document.getElementById('typed1');
-		const typed2 = document.getElementById('typed2');
+    document.addEventListener("DOMContentLoaded", () => {
+    });
 
-		const h1Text = h1 ? h1.textContent.trim() : '';
-		const pText = p ? p.textContent.trim() : '';
+    window.toggleMenu = function () {
+        const nav = document.getElementById("nav");
+        const menu = document.querySelector(".menu");
 
-		function startTypedLinesLoop() {
-			if (!typed1 || !typed2) return;
-			const lines = [
-				'Transforming Learning with ICT, Coding & Robotics',
-				'helping students Explore Web Development & Graphic Design'
-			];
+        nav.classList.toggle("open");
+        menu.classList.toggle("open");
+    };
 
-			// ensure cleared
-			typed1.textContent = '';
-			typed2.textContent = '';
 
-			(function loop() {
-				typeText(typed1, lines[0], 90, () => {
-					setTimeout(() => {
-						typeText(typed2, lines[1], 90, () => {
-							setTimeout(() => {
-								// erase both and repeat
-								eraseText(typed1, 40, () => {
-									eraseText(typed2, 40, () => {
-										setTimeout(loop, 700);
-									});
-								});
-							}, 1600);
-						});
-					}, 700);
-				});
-			})();
-		}
+    /* ==============================
+       TYPING EFFECT (BANNER)
+    ============================== */
+    const h1 = document.querySelector(".hero h1");
+    const p = document.querySelector(".hero p");
+    const typed1 = document.getElementById("typed1");
+    const typed2 = document.getElementById("typed2");
 
-		// Start the sequence: H1 (fast) -> paragraph (slower) -> typed lines loop
-		if (h1) h1.textContent = '';
-		if (p) p.textContent = '';
+    function typeText(element, text, speed, callback) {
+        if (!element) return;
 
-		if (h1Text) {
-			typeText(h1, h1Text, 60, () => {
-				if (pText) {
-					typeText(p, pText, 120, startTypedLinesLoop);
-				} else {
-					startTypedLinesLoop();
-				}
-			});
-		} else if (pText) {
-			typeText(p, pText, 120, startTypedLinesLoop);
-		} else {
-			startTypedLinesLoop();
-		}
+        let i = 0;
+        element.textContent = "";
 
-	// Close mobile menu when a nav link is clicked
-	document.querySelectorAll('#nav a').forEach(a => {
-		a.addEventListener('click', () => {
-			const nav = document.getElementById('nav');
-			const menu = document.querySelector('.menu');
-			if (nav && menu && nav.classList.contains('open')) {
-				nav.classList.remove('open');
-				menu.classList.remove('open');
-			}
-		});
-	});
+        const interval = setInterval(() => {
+            element.textContent += text.charAt(i);
+            i++;
 
-	// NOTE: removed the separate looping typing effect that showed individual words
-	// (e.g., "ICT", "Coding", "Robotics") under the hero. The hero paragraph
-	// itself now types in with a single, slower typing effect above the buttons.
+            if (i >= text.length) {
+                clearInterval(interval);
+                if (callback) callback();
+            }
+        }, speed);
+    }
 
-	// Simple slider: rotates '.slide' elements by toggling .active
-	(function slider() {
-		const slides = Array.from(document.querySelectorAll('.slider .slide'));
-		if (!slides.length) return;
-		let current = slides.findIndex(s => s.classList.contains('active'));
-		if (current < 0) current = 0;
+    // Start typing animation
+    if (h1 && p) {
+        const h1Text = h1.textContent;
+        const pText = p.textContent;
 
-		// ensure only one active
-		slides.forEach((s, i) => s.classList.toggle('active', i === current));
+        h1.textContent = "";
+        p.textContent = "";
 
-		const interval = 1500; // faster slide interval (ms)
-		let timer = setInterval(next, interval);
+        typeText(h1, h1Text, 50, () => {
+            typeText(p, pText, 70, () => {
 
-		function next() {
-			slides[current].classList.remove('active');
-			current = (current + 1) % slides.length;
-			slides[current].classList.add('active');
-		}
+                // LOOP TEXT
+                const lines = [
+                    "Transforming Learning with ICT, Coding & Robotics",
+                    "Helping Students Explore Web Development & Graphic Design"
+                ];
 
-		// pause on hover
-		const sliderEl = document.querySelector('.slider');
-		if (sliderEl) {
-			sliderEl.addEventListener('mouseenter', () => clearInterval(timer));
-			sliderEl.addEventListener('mouseleave', () => timer = setInterval(next, interval));
-		}
-	})();
+                let index = 0;
 
-	// Smooth scroll for internal links
-	document.querySelectorAll('a[href^="#"]').forEach(a => {
-		a.addEventListener('click', function (e) {
-			const href = this.getAttribute('href');
-			if (href === '#' || href === '') return;
-			const target = document.querySelector(href);
-			if (target) {
-				e.preventDefault();
-				target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-			}
-		});
-	});
+                function loopTyping() {
+                    if (!typed1 || !typed2) return;
 
-	// Contact form handler: prevent actual submit and show a friendly message
-	const contactForm = document.querySelector('.contact-form');
-	if (contactForm) {
-		contactForm.addEventListener('submit', (e) => {
-			e.preventDefault();
-			// Simple UX: replace with a thank you message
-			const parent = contactForm.parentElement;
-			const msg = document.createElement('p');
-			msg.textContent = 'Thanks — your message has been received. We will get back to you soon.';
-			msg.style.fontWeight = '600';
-			parent.replaceChild(msg, contactForm);
-		});
-	}
+                    typed1.textContent = "";
+                    typed2.textContent = "";
 
-});
+                    typeText(typed1, lines[index], 60, () => {
+                        setTimeout(() => {
+                            index = (index + 1) % lines.length;
+                            loopTyping();
+                        }, 2000);
+                    });
+                }
 
+                loopTyping();
+            });
+        });
+    }
+
+
+    /* ==============================
+       IMAGE SLIDER
+    ============================== */
+    const slides = document.querySelectorAll(".slide");
+    let currentSlide = 0;
+
+    function showSlide(index) {
+        slides.forEach((slide, i) => {
+            slide.classList.remove("active");
+            if (i === index) {
+                slide.classList.add("active");
+            }
+        });
+    }
+
+    if (slides.length > 0) {
+        showSlide(currentSlide);
+
+        setInterval(() => {
+            currentSlide++;
+            if (currentSlide >= slides.length) {
+                currentSlide = 0;
+            }
+            showSlide(currentSlide);
+        }, 2000); // speed
+    }
+
+
+    /* ==============================
+       SMOOTH SCROLL
+    ============================== */
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener("click", function (e) {
+            const target = document.querySelector(this.getAttribute("href"));
+            if (target) {
+                e.preventDefault();
+                target.scrollIntoView({
+                    behavior: "smooth"
+                });
+            }
+        });
+    });
+
+/* ==============================
+   ENROLLMENT FORM (FIXED)
+============================== */
+const enrollForm = document.querySelector(".enrollment-form");
+
+if (enrollForm) {
+    enrollForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const child = this.child_name.value;
+        const parent = this.parent_name.value;
+        const email = this.email.value;
+        const phone = this.phone.value;
+        const message = this.message.value;
+
+        const text =
+            "Enrollment Request:%0A" +
+            "Child Name: " + child + "%0A" +
+            "Parent Name: " + parent + "%0A" +
+            "Email: " + email + "%0A" +
+            "Phone: " + phone + "%0A" +
+            "Message: " + message;
+
+        // WhatsApp
+        window.open(
+            "https://wa.me/2348146018803?text=" + encodeURIComponent(text),
+            "_blank"
+        );
+
+        // Email
+        window.location.href =
+            "mailto:brighttecheducation@gmail.com?subject=Enrollment Request&body=" +
+            encodeURIComponent(text);
+    });
+}
+    
