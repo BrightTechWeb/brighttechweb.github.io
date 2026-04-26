@@ -185,22 +185,106 @@ function switchTab(tab) {
     }
 }
     
+/* ==============================
+   AUTH SYSTEM (SIGN UP / LOGIN)
+============================== */
+
+// GET USERS FROM LOCAL STORAGE
+function getUsers() {
+    return JSON.parse(localStorage.getItem("users")) || [];
+}
+
+function saveUsers(users) {
+    localStorage.setItem("users", JSON.stringify(users));
+}
+
+
+/* ==============================
+   SIGN UP
+============================== */
+
+document.querySelector("#signup .auth-btn").addEventListener("click", function () {
+    const inputs = document.querySelectorAll("#signup input");
+
+    const name = inputs[0].value;
+    const email = inputs[1].value;
+    const password = inputs[2].value;
+
+    let users = getUsers();
+
+    // ❌ prevent duplicate email (IMPORTANT FIX)
+    const userExists = users.find(user => user.email === email);
+
+    if (userExists) {
+        alert("Email already exists! Please login or use another email.");
+        return;
+    }
+
+    const newUser = { name, email, password };
+    users.push(newUser);
+
+    saveUsers(users);
+
+    alert("Account created successfully!");
+});
+
+
+/* ==============================
+   LOGIN
+============================== */
+
 const loginBtn = document.getElementById("loginBtn");
 
-loginBtn.addEventListener("click", function () {
-    const email = document.getElementById("loginEmail").value;
-    const password = document.getElementById("loginPassword").value;
-    const errorMsg = document.getElementById("loginError");
+if (loginBtn) {
+    loginBtn.addEventListener("click", function () {
+        const email = document.getElementById("loginEmail").value;
+        const password = document.getElementById("loginPassword").value;
+        const errorMsg = document.getElementById("loginError");
 
-    // FAKE LOGIN CHECK (you can change later)
-    const correctEmail = "admin@gmail.com";
-    const correctPassword = "1234";
+        let users = getUsers();
 
-    if (email === correctEmail && password === correctPassword) {
-        errorMsg.style.color = "green";
-        errorMsg.textContent = "Login successful!";
-    } else {
-        errorMsg.style.color = "red";
-        errorMsg.textContent = "Incorrect email or password";
+        const user = users.find(u => u.email === email);
+
+        if (!user) {
+            errorMsg.style.color = "red";
+            errorMsg.textContent = "Account not found. Please sign up first.";
+            return;
+        }
+
+        if (user.password === password) {
+            errorMsg.style.color = "green";
+            errorMsg.textContent = "Login successful!";
+        } else {
+            errorMsg.style.color = "red";
+            errorMsg.textContent = "Wrong password!";
+        }
+    });
+}
+
+
+/* ==============================
+   FORGOT PASSWORD (RESET)
+============================== */
+
+document.querySelector(".forgot-link a").addEventListener("click", function (e) {
+    e.preventDefault();
+
+    const email = prompt("Enter your registered email:");
+
+    let users = getUsers();
+
+    const userIndex = users.findIndex(u => u.email === email);
+
+    if (userIndex === -1) {
+        alert("No account found with this email.");
+        return;
     }
+
+    const newPassword = prompt("Enter your new password:");
+
+    users[userIndex].password = newPassword;
+
+    saveUsers(users);
+
+    alert("Password updated successfully! You can now login.");
 });

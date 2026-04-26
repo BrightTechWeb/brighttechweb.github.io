@@ -28,7 +28,9 @@
         <p>Empowering Young Minds with ICT, Coding, Robotics, & Creative Digital Skills</p>
         <h3 class="typed-line" id="typed1" aria-hidden="true">&nbsp;</h3>
         <h4 class="typed-line" id="typed2" aria-hidden="true">&nbsp;</h4>
-        <button type="button">Enroll Your Child Today</button>
+        <a href="#enroll">
+            <button type="button">Enroll Your Child Today</button>
+        </a>
         <button type="button">Partner With Us</button>
     </div>
 </section>
@@ -230,8 +232,6 @@
 <section id="contact" class="card auth-section">
     <h2>Get Started</h2>
 
-    <div class="auth-card">
-
         <!-- Tabs -->
         <div class="auth-tabs">
             <button class="tab-btn active" onclick="switchTab('signin')">Sign In</button>
@@ -241,27 +241,22 @@
         <!-- SIGN IN -->
         <div id="signin" class="tab-content active">
             <h3>Sign In</h3>
-            <input type="email" placeholder="Email" required>
-            <input type="password" placeholder="Password" required>
-            <button class="auth-btn">Sign In</button>
+
+            <input type="email" id="loginEmail"
+            placeholder="Email" required>
+            <input type="password" id="loginPassword"
+            placeholder="Password" required>
+
+            <button class="auth-btn"
+            id="loginBtn">Sign In</button>
+
+            <p id="loginError" style="color:red;"></p>
+
+            <p class="forgot-link">
+                <a href="#">Forgot your password?</a>
+            </p>
         </div>
-
-        <!-- SIGN IN -->
-<div id="signin" class="tab-content active">
-    <h3>Sign In</h3>
-
-    <input type="email" id="loginEmail" placeholder="Email" required>
-    <input type="password" id="loginPassword" placeholder="Password" required>
-
-    <button class="auth-btn" id="loginBtn">Sign In</button>
-
-    <p id="loginError" style="color:red;"></p>
-
-    <!-- ✅ RESTORED FORGOT PASSWORD -->
-    <p class="forgot-link">
-        <a href="#">Forgot your password?</a>
-    </p>
-</div>
+        
 
 <!-- SIGN UP -->
 <div id="signup" class="tab-content">
@@ -271,6 +266,7 @@
     <input type="password" placeholder="Password" required>
     <button class="auth-btn">Create Account</button>
 </div>
+</section>
 
 <!-- FOLLOW US (CORRECT POSITION BEFORE ENROLLMENT) -->
 <section class="card follow-us">
@@ -286,7 +282,7 @@
 </section>
 
 <!-- ENROLLMENT -->
-<form class="contact-form enrollment-form" id="enrollmentForm">
+<form id="enroll" class="contact-form enrollment-form">
 
     <input type="text" name="child_name" placeholder="Child's full name" required>
     <input type="text" name="parent_name" placeholder="Parent / Guardian name" required>
@@ -342,10 +338,6 @@
             <a href="#contact">Contact</a>
         </div>
 
-<!-- &copy; 2026 Bright Tech Education
- Author: Mayowa Samson Damilola
- This project is for educational viewing only.
- Unauthorized copying or redistribution is prohibited.-->
         <p>&copy; 2026 Bright Tech Education</p>
 
     </div>
