@@ -87,30 +87,26 @@
     /* ==============================
        IMAGE SLIDER
     ============================== */
+    document.addEventListener("DOMContentLoaded", () => {
     const slides = document.querySelectorAll(".slide");
     let currentSlide = 0;
 
     function showSlide(index) {
         slides.forEach((slide, i) => {
             slide.classList.remove("active");
-            if (i === index) {
-                slide.classList.add("active");
-            }
+            if (i === index) slide.classList.add("active");
         });
     }
 
     if (slides.length > 0) {
-        showSlide(currentSlide);
+        showSlide(0);
 
         setInterval(() => {
-            currentSlide++;
-            if (currentSlide >= slides.length) {
-                currentSlide = 0;
-            }
+            currentSlide = (currentSlide + 1) % slides.length;
             showSlide(currentSlide);
-        }, 2000); // speed
+        }, 2000);
     }
-
+});
 
     /* ==============================
        SMOOTH SCROLL
@@ -203,31 +199,33 @@ function saveUsers(users) {
    SIGN UP
 ============================== */
 
-document.querySelector("#signup .auth-btn").addEventListener("click", function () {
-    const inputs = document.querySelectorAll("#signup input");
+const signupBtn = document.querySelector("#signup .auth-btn");
 
-    const name = inputs[0].value;
-    const email = inputs[1].value;
-    const password = inputs[2].value;
+if (signupBtn) {
+    signupBtn.addEventListener("click", function () {
+        const inputs = document.querySelectorAll("#signup input");
 
-    let users = getUsers();
+        const name = inputs[0].value;
+        const email = inputs[1].value;
+        const password = inputs[2].value;
 
-    // ❌ prevent duplicate email (IMPORTANT FIX)
-    const userExists = users.find(user => user.email === email);
+        let users = getUsers();
 
-    if (userExists) {
-        alert("Email already exists! Please login or use another email.");
-        return;
-    }
+        const userExists = users.find(user => user.email === email);
 
-    const newUser = { name, email, password };
-    users.push(newUser);
+        if (userExists) {
+            alert("Email already exists! Please login or use another email.");
+            return;
+        }
 
-    saveUsers(users);
+        const newUser = { name, email, password };
+        users.push(newUser);
 
-    alert("Account created successfully!");
-});
+        saveUsers(users);
 
+        alert("Account created successfully!");
+    });
+}
 
 /* ==============================
    LOGIN
